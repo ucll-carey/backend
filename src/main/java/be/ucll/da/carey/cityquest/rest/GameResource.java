@@ -35,8 +35,17 @@ public class GameResource {
 
     // POST
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Game create(@Valid @RequestBody GameInputDTO game) {
-        System.out.println(game);
-        return null;
+    public Game create(@Valid @RequestBody GameInputDTO gameInput) {
+        //System.out.println(gameInput);
+        //ModelMapper modelMapper = new ModelMapper();
+        Game game = Game.builder()
+                .id(UUID.randomUUID())
+                .name(gameInput.getName())
+                .description(gameInput.getDescription())
+                .city(gameInput.getCity())
+                .cityCoordinate(gameInput.getCityCoordinate())
+                .questions(gameInput.getQuestions())
+                .build();
+        return repository.save(game);
     }
 }
