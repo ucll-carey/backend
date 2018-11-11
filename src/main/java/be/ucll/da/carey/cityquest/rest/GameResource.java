@@ -4,6 +4,7 @@ import be.ucll.da.carey.cityquest.db.GameDb;
 import be.ucll.da.carey.cityquest.db.GameInMemoryDb;
 import be.ucll.da.carey.cityquest.db.GameRepository;
 import be.ucll.da.carey.cityquest.model.Game;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,8 +25,11 @@ public class GameResource {
 
     // GET ALL
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Game> getAll() {
-        return repository.findAll();
+    public List<GameWithoutQuestionDTO> getAll() {
+        ModelMapper modelMapper = new ModelMapper();
+        return repository.findAll().stream()
+                .map(game -> modelMapper.map(game, GameWithoutQuestionDTO.class))
+                .collect(Collectors.toList());
         //return gameDb.getAll();
     }
 
