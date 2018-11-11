@@ -2,25 +2,41 @@ package be.ucll.da.carey.cityquest.rest;
 
 import be.ucll.da.carey.cityquest.db.GameDb;
 import be.ucll.da.carey.cityquest.db.GameInMemoryDb;
+import be.ucll.da.carey.cityquest.db.GameRepository;
 import be.ucll.da.carey.cityquest.model.Game;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/game")
 public class GameResource {
     private GameDb gameDb = new GameInMemoryDb();
 
-    @RequestMapping("/")
-    public String index() {
-        return "This is an index page";
+    @Autowired
+    private GameRepository repository;
+
+    // GET ALL
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public List<Game> getAll() {
+        return repository.findAll();
+        //return gameDb.getAll();
     }
 
-    @RequestMapping("/all")
-    public ArrayList<Game> getAll() {
-        return gameDb.getAll();
+    // GET ONE
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Optional<Game> getByUUID(@PathVariable("id") UUID id) {
+        return repository.findById(id);
     }
 
+    // POST
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public Game create(@Valid @RequestBody GameInputDTO game) {
+        System.out.println(game);
+        return null;
+    }
 }

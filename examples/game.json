@@ -1,0 +1,21 @@
+{
+    "city": "Leuven",
+    "cityCoordinate": {
+        "latitude": 50.8798438,
+        "longitude": 4.700517600000012
+    },
+    "description": "City Quest in Leuven",
+    "name": "Leuven City Quest",
+    "questions": [
+        {
+            "answerInfo": "since 1920 noemt de kathedraal a!",
+            "answers": ["a", "b", "c"],
+            "coordinate": {
+                "latitude": 50.8798438,
+                "longitude": 4.700517600000012
+            },
+            "correctAnswer": 1,
+            "question": "Hoe heet de kathedraal?"
+        }
+    ]
+}
