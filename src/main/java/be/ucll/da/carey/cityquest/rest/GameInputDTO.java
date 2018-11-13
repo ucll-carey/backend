@@ -7,20 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 public class GameInputDTO {
+    private UUID id;
     @NonNull
     private String name;
     @NonNull
     private String description;
     @NonNull
     private String city;
-    @NonNull @Valid
+    @NonNull
+    @Valid
     private Coordinate cityCoordinate;
     @NonNull
     private ArrayList<Question> questions;
+
 }

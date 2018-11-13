@@ -4,8 +4,10 @@ import be.ucll.da.carey.cityquest.db.GameDb;
 import be.ucll.da.carey.cityquest.db.GameInMemoryDb;
 import be.ucll.da.carey.cityquest.db.GameRepository;
 import be.ucll.da.carey.cityquest.model.Game;
+import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +26,7 @@ public class GameResource {
     private GameRepository repository;
 
     // GET ALL
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public List<GameWithoutQuestionDTO> getAll() {
         ModelMapper modelMapper = new ModelMapper();
         return repository.findAll().stream()
@@ -34,13 +36,13 @@ public class GameResource {
     }
 
     // GET ONE
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public Optional<Game> getByUUID(@PathVariable("id") UUID id) {
         return repository.findById(id);
     }
 
     // POST
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @PostMapping("/")
     public Game create(@Valid @RequestBody GameInputDTO gameInput) {
         //System.out.println(gameInput);
         //ModelMapper modelMapper = new ModelMapper();
@@ -54,4 +56,39 @@ public class GameResource {
                 .build();
         return repository.save(game);
     }
+
+    // PUT
+    @PutMapping()
+    public Game update(@Valid @RequestBody GameInputDTO gameInput) {
+        Optional<Game> optionalGame = repository.findById(gameInput.getId());
+        if (optionalGame.isPresent()) {
+            val game = optionalGame.get();
+            game.setName(gameInput.getName());
+            game.setDescription(gameInput.getDescription());
+            game.setCity(gameInput.getCity());
+            game.setCityCoordinate(gameInput.getCityCoordinate());
+            game.setQuestions(gameInput.getQuestions());
+            return repository.insert(game);
+        } else {
+            throw new GameNotFoundException();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public Game delete(@PathVariable("id") UUID id) {
+        Optional<Game> optionalGame = repository.findById(id);
+        if (optionalGame.isPresent()) {
+            val game = optionalGame.get();
+            repository.delete(game);
+            return game;
+        } else {
+            throw new GameNotFoundException();
+        }
+    }
+
+}
+
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Game not found")
+class GameNotFoundException extends RuntimeException {
+
 }
