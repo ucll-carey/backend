@@ -1,12 +1,15 @@
 package be.ucll.da.carey.cityquest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
 
 @Data
 public class Coordinate {
+    @JsonProperty("lat")
     private double latitude;
+    @JsonProperty("lon")
     private double longitude;
 
     @java.beans.ConstructorProperties({"latitude", "longitude"})

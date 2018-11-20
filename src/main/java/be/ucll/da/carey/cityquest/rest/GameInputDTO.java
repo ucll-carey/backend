@@ -2,6 +2,7 @@ package be.ucll.da.carey.cityquest.rest;
 
 import be.ucll.da.carey.cityquest.model.Coordinate;
 import be.ucll.da.carey.cityquest.model.Question;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -19,9 +20,11 @@ public class GameInputDTO {
     @NonNull
     private String description;
     @NonNull
+    @JsonProperty("location")
     private String city;
     @NonNull
     @Valid
+    @JsonProperty("coordinates")
     private Coordinate cityCoordinate;
     @NonNull
     private ArrayList<Question> questions;

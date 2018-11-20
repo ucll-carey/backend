@@ -1,15 +1,26 @@
 package be.ucll.da.carey.cityquest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 import java.util.ArrayList;
 
 @Data
+@JsonPropertyOrder( {
+        "question",
+        "coordinates",
+        "answers",
+        "correctAnswer",
+        "extraInformation"
+})
 public class Question {
+    @JsonProperty("coordinates")
     private Coordinate coordinate;
     private String question;
     private ArrayList<String> answers;
     private int correctAnswer;
+    @JsonProperty("extraInformation")
     private String answerInfo;
 
     @java.beans.ConstructorProperties({"coordinate", "question", "answers", "correctAnswer", "answerInfo"})

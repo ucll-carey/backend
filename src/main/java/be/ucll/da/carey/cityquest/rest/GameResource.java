@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/game")
+@RequestMapping("/games")
 public class GameResource {
     private GameDb gameDb = new GameInMemoryDb();
 
@@ -26,7 +26,7 @@ public class GameResource {
     private GameRepository repository;
 
     // GET ALL
-    @GetMapping("/")
+    @GetMapping("")
     public List<GameWithoutQuestionDTO> getAll() {
         ModelMapper modelMapper = new ModelMapper();
         return repository.findAll().stream()
@@ -42,7 +42,7 @@ public class GameResource {
     }
 
     // POST
-    @PostMapping("/")
+    @PostMapping("")
     public Game create(@Valid @RequestBody GameInputDTO gameInput) {
         //System.out.println(gameInput);
         //ModelMapper modelMapper = new ModelMapper();
@@ -58,7 +58,7 @@ public class GameResource {
     }
 
     // PUT
-    @PutMapping()
+    @PutMapping("")
     public Game update(@Valid @RequestBody GameInputDTO gameInput) {
         Optional<Game> optionalGame = repository.findById(gameInput.getId());
         if (optionalGame.isPresent()) {
@@ -89,6 +89,4 @@ public class GameResource {
 }
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Game not found")
-class GameNotFoundException extends RuntimeException {
-
-}
+class GameNotFoundException extends RuntimeException { }
