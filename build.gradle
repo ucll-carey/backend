@@ -14,7 +14,11 @@ buildscript {
 plugins {
 	id 'com.google.cloud.tools.jib' version '0.10.0'
 	id 'com.palantir.docker' version '0.20.1'
+	// id 'io.franzbecker.gradle-lombok' version '1.18.4'
+	id 'net.ltgt.apt' version '0.10'
 }
+
+// provided group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
 
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
@@ -41,7 +45,8 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
-	compileOnly('org.projectlombok:lombok')
+	compileOnly 'org.projectlombok:lombok:1.18.4'
+	apt 'org.projectlombok:lombok:1.18.4'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
