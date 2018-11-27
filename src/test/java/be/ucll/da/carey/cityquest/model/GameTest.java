@@ -40,7 +40,7 @@ public class GameTest {
         assertEquals(questions, newGame.getQuestions());
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = NullPointerException.class)
     public void emptyNameThrowsException() {
         Game.builder()
                 .description(description)
@@ -49,7 +49,7 @@ public class GameTest {
                 .build();
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = NullPointerException.class)
     public void emptyDescriptionThrowsException() {
         Game.builder()
                 .name(name)
@@ -58,7 +58,7 @@ public class GameTest {
                 .build();
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = NullPointerException.class)
     public void emptyCityThrowsException() {
         Game.builder()
                 .name(name)
@@ -67,7 +67,7 @@ public class GameTest {
                 .build();
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = NullPointerException.class)
     public void emptyCoordinateThrowsException() {
         Game.builder()
                 .name(name)
