@@ -11,6 +11,10 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
+plugins {
+	id 'com.google.cloud.tools.jib' version '0.10.0'
+	id 'com.palantir.docker' version '0.20.1'
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
@@ -20,7 +24,8 @@ apply plugin: 'war'
 
 group = 'be.ucll.da.carey'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 11
+sourceCompatibility = JavaVersion.VERSION_11
+
 
 repositories {
 	mavenCentral()
@@ -42,4 +47,10 @@ dependencies {
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
+jib {
+	to {
+		image = 'cityquest/backend:0.0.1'
+	}
+	allowInsecureRegistries = true
 }
