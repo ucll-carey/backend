@@ -43,23 +43,15 @@ public class GameResource {
 
     // POST
     @PostMapping("")
-    public Game create(@Valid @RequestBody GameInputDTO gameInput) {
-        //System.out.println(gameInput);
-        //ModelMapper modelMapper = new ModelMapper();
-        Game game = Game.builder()
-                .id(UUID.randomUUID())
-                .name(gameInput.getName())
-                .description(gameInput.getDescription())
-                .city(gameInput.getCity())
-                .cityCoordinate(gameInput.getCityCoordinate())
-                .questions(gameInput.getQuestions())
-                .build();
+    public Game create(@Valid @RequestBody Game game) {
+        // give the new game a uuid
+        game.setId(UUID.randomUUID());
         return repository.save(game);
     }
 
     // PUT
     @PutMapping("")
-    public Game update(@Valid @RequestBody GameInputDTO gameInput) {
+    public Game update(@Valid @RequestBody Game gameInput) {
         Optional<Game> optionalGame = repository.findById(gameInput.getId());
         if (optionalGame.isPresent()) {
             val game = optionalGame.get();
