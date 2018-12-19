@@ -14,7 +14,7 @@ buildscript {
 plugins {
 	id 'com.google.cloud.tools.jib' version '0.10.0'
 	id 'com.palantir.docker' version '0.20.1'
-	// id 'io.franzbecker.gradle-lombok' version '1.18.4'
+	//id 'io.franzbecker.gradle-lombok' version '1.18.4'
 	id 'net.ltgt.apt' version '0.10'
 }
 
@@ -28,7 +28,7 @@ apply plugin: 'war'
 
 group = 'be.ucll.da.carey'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 
 repositories {
@@ -45,8 +45,11 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
-	compileOnly 'org.projectlombok:lombok:1.18.4'
-	apt 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor("org.projectlombok:lombok:1.18.4")
+    compileOnly("org.projectlombok:lombok:1.18.4")
+    implementation("org.projectlombok:lombok:1.18.4")
+
+    //apt 'org.projectlombok:lombok:1.18.4'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
@@ -58,4 +61,41 @@ jib {
 		image = 'cityquest/backend:0.0.1'
 	}
 	allowInsecureRegistries = true
+}
+task explodedWar(type: Copy) {
+	into "$buildDir/exploded"
+	with war
+}
+
+war.dependsOn explodedWar
+
+task resolveDependencies {
+    doLast {
+        project.rootProject.allprojects.each { subProject ->
+            subProject.buildscript.configurations.each { configuration ->
+                resolveConfiguration(configuration)
+            }
+            subProject.configurations.each { configuration ->
+                resolveConfiguration(configuration)
+            }
+        }
+    }
+}
+
+void resolveConfiguration(configuration) {
+    if (isResolveableConfiguration(configuration)) {
+        configuration.resolve()
+    }
+}
+
+boolean isResolveableConfiguration(configuration) {
+    def nonResolveableConfigurations = ['apiElements', 'implementation',
+                                        'runtimeElements', 'runtimeOnly',
+                                        'testImplementation', 'testRuntimeOnly',
+                                        'generatedImplementation', 'generatedRuntimeOnly']
+
+    if (nonResolveableConfigurations.contains(configuration.getName())) {
+        return false
+    }
+    return true
 }
