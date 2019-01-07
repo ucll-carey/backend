@@ -2,17 +2,24 @@ package be.ucll.da.carey.cityquest.rest;
 
 import be.ucll.da.carey.cityquest.db.GameRepository;
 import be.ucll.da.carey.cityquest.model.Game;
+import be.ucll.da.carey.cityquest.model.GamePreferences;
+import be.ucll.da.carey.cityquest.model.RecommendConfig;
 import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import javax.naming.ServiceUnavailableException;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,6 +29,13 @@ public class GameResource {
     @Autowired
     private GameRepository repository;
 
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    private RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired
+    private RecommendConfig recommendConfig;
     // GET ALL
     @GetMapping("")
     public List<GameWithoutQuestionDTO> getAll() {
@@ -29,6 +43,20 @@ public class GameResource {
         return repository.findAll().stream()
                 .map(game -> modelMapper.map(game, GameWithoutQuestionDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    // GET ALL with preference
+    @GetMapping("/getpreferences/{username}")
+    public GamePreferences getAllWithPreference(@PathVariable String username) throws ServiceUnavailableException {
+        //val games = getAll();
+        URI service = recommendationServiceUrl()
+                .map(s -> s.resolve("/recommendation/recommend/" + username))
+                .orElseThrow(ServiceUnavailableException::new);
+        System.out.println("recommendservice:" + service);
+        return restTemplate
+                .getForEntity(service, GamePreferences.class)
+                .getBody();
+        //return games;
     }
 
     // GET ONE
@@ -74,6 +102,17 @@ public class GameResource {
         } else {
             throw new GameNotFoundException();
         }
+    }
+
+    // for debuggin purposes
+    @GetMapping("/debug")
+    public Optional<URI> recommendationServiceUrl() {
+        if (recommendConfig.getRecommendserver() != null)
+            return Optional.ofNullable(recommendConfig.getRecommendserver());
+        return discoveryClient.getInstances("recommendation")
+                .stream()
+                .map(si -> si.getUri())
+                .findFirst();
     }
 
 }

@@ -1,0 +1,6 @@
+spring.data.mongodb.uri: mongodb://localhost/cityquest
+# We don't need consul when developing
+spring.cloud.consul.enabled: false
+# this way we can overwrite the recommend service uri
+recommendserver: http://localhost:8082/
+
