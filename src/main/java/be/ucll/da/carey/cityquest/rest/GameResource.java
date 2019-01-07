@@ -32,7 +32,8 @@ public class GameResource {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private RecommendConfig recommendConfig;
