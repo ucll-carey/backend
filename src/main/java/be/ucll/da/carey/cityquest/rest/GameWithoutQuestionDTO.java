@@ -21,4 +21,5 @@ public class GameWithoutQuestionDTO {
     private String description;
     private String location;
     private Coordinate coordinates;
+    private double score;
 }
