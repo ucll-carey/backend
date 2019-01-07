@@ -57,8 +57,8 @@ public class GameResource {
             val game = optionalGame.get();
             game.setName(gameInput.getName());
             game.setDescription(gameInput.getDescription());
-            game.setCity(gameInput.getCity());
-            game.setCityCoordinate(gameInput.getCityCoordinate());
+            game.setLocation(gameInput.getLocation());
+            game.setCoordinate(gameInput.getCoordinate());
             game.setQuestions(gameInput.getQuestions());
             return repository.insert(game);
         } else {

@@ -12,13 +12,13 @@ public class GameTest {
 
     private static final String name = "City Quest Leuven";
     private static final String description = "City quest in Leuven";
-    private static final String city = "Leuven";
-    private static final Coordinate cityCoordinate
+    private static final String location = "Leuven";
+    private static final Coordinate coordinate
             = Coordinate.builder().latitude(50.8798438).longitude(4.700517600000012).build();
 
     private static final Question question = Question.builder().question("What's the name of the cathedral of Leuven?")
             .answers(new ArrayList<>(Arrays.asList("St. Peter's Church", "St. Michael's Church", "Saint Rumbold's Cathedral")))
-            .coordinate(cityCoordinate)
+            .coordinate(coordinate)
             .build();
 
     private static final ArrayList<Question> questions = new ArrayList<>(Collections.singletonList(question));
@@ -28,15 +28,15 @@ public class GameTest {
         Game newGame = Game.builder()
                 .name(name)
                 .description(description)
-                .city(city)
-                .cityCoordinate(cityCoordinate)
+                .location(location)
+                .coordinate(coordinate)
                 .questions(questions)
                 .build();
 
         assertEquals(name, newGame.getName());
         assertEquals(description, newGame.getDescription());
-        assertEquals(city, newGame.getCity());
-        assertEquals(cityCoordinate, newGame.getCityCoordinate());
+        assertEquals(location, newGame.getLocation());
+        assertEquals(coordinate, newGame.getCoordinate());
         assertEquals(questions, newGame.getQuestions());
     }
 
@@ -44,8 +44,8 @@ public class GameTest {
     public void emptyNameThrowsException() {
         Game.builder()
                 .description(description)
-                .city(city)
-                .cityCoordinate(cityCoordinate)
+                .location(location)
+                .coordinate(coordinate)
                 .build();
     }
 
@@ -53,8 +53,8 @@ public class GameTest {
     public void emptyDescriptionThrowsException() {
         Game.builder()
                 .name(name)
-                .city(city)
-                .cityCoordinate(cityCoordinate)
+                .location(location)
+                .coordinate(coordinate)
                 .build();
     }
 
@@ -63,7 +63,7 @@ public class GameTest {
         Game.builder()
                 .name(name)
                 .description(description)
-                .cityCoordinate(cityCoordinate)
+                .coordinate(coordinate)
                 .build();
     }
 
@@ -72,7 +72,7 @@ public class GameTest {
         Game.builder()
                 .name(name)
                 .description(description)
-                .city(city)
+                .location(location)
                 .build();
     }
 

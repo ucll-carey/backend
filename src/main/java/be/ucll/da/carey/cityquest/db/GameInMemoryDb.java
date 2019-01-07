@@ -25,8 +25,8 @@ public class GameInMemoryDb implements GameDb {
 
         Game gameLeuven = Game.builder()
                 .name("Leuven City Quest")
-                .city("Leuven")
-                .cityCoordinate(coordinateLeuven)
+                .location("Leuven")
+                .coordinate(coordinateLeuven)
                 .description("City Quest in Leuven")
                 .questions(questionsLeuven)
                 .build();
