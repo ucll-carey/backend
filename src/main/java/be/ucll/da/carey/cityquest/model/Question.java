@@ -23,7 +23,7 @@ public class Question {
     @JsonProperty("extraInformation")
     private String answerInfo;
 
-    @java.beans.ConstructorProperties({"coordinate", "question", "answers", "correctAnswer", "answerInfo"})
+    @java.beans.ConstructorProperties({"coordinates", "question", "answers", "correctAnswer", "answerInfo"})
     Question(Coordinate coordinate, String question, ArrayList<String> answers, int correctAnswer, String answerInfo) {
         this.coordinate = coordinate;
         this.question = question;
@@ -78,7 +78,7 @@ public class Question {
         }
 
         public String toString() {
-            return "Question.QuestionBuilder(coordinate=" + this.coordinate + ", question=" + this.question + ", answers=" + this.answers + ", correctAnswer=" + this.correctAnswer + ", answerInfo=" + this.answerInfo + ")";
+            return "Question.QuestionBuilder(coordinates=" + this.coordinate + ", question=" + this.question + ", answers=" + this.answers + ", correctAnswer=" + this.correctAnswer + ", answerInfo=" + this.answerInfo + ")";
         }
     }
 }

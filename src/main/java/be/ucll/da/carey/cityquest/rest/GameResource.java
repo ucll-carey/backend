@@ -1,7 +1,5 @@
 package be.ucll.da.carey.cityquest.rest;
 
-import be.ucll.da.carey.cityquest.db.GameDb;
-import be.ucll.da.carey.cityquest.db.GameInMemoryDb;
 import be.ucll.da.carey.cityquest.db.GameRepository;
 import be.ucll.da.carey.cityquest.model.Game;
 import lombok.val;
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/games")
 public class GameResource {
-    private GameDb gameDb = new GameInMemoryDb();
 
     @Autowired
     private GameRepository repository;
@@ -32,7 +29,6 @@ public class GameResource {
         return repository.findAll().stream()
                 .map(game -> modelMapper.map(game, GameWithoutQuestionDTO.class))
                 .collect(Collectors.toList());
-        //return gameDb.getAll();
     }
 
     // GET ONE
@@ -45,7 +41,9 @@ public class GameResource {
     @PostMapping("")
     public Game create(@Valid @RequestBody Game game) {
         // give the new game a uuid
+        System.out.println(game);
         game.setId(UUID.randomUUID());
+        System.out.println(game);
         return repository.save(game);
     }
 
@@ -58,7 +56,7 @@ public class GameResource {
             game.setName(gameInput.getName());
             game.setDescription(gameInput.getDescription());
             game.setLocation(gameInput.getLocation());
-            game.setCoordinate(gameInput.getCoordinate());
+            game.setCoordinates(gameInput.getCoordinates());
             game.setQuestions(gameInput.getQuestions());
             return repository.insert(game);
         } else {

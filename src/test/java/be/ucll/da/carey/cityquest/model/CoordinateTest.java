@@ -16,8 +16,8 @@ public class CoordinateTest {
                 .longitude(longitude)
                 .build();
 
-        assertEquals(latitude, newCoordinate.getLatitude(), 0.0);
-        assertEquals(longitude, newCoordinate.getLongitude(), 0.0);
+        assertEquals(latitude, newCoordinate.getLat(), 0.0);
+        assertEquals(longitude, newCoordinate.getLon(), 0.0);
     }
 
     @Test(expected = AssertionError.class)

@@ -5,7 +5,6 @@ import be.ucll.da.carey.cityquest.model.Game;
 import be.ucll.da.carey.cityquest.model.Question;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class GameInMemoryDb implements GameDb {
     private ArrayList<Game> games = new ArrayList<>();
@@ -26,7 +25,7 @@ public class GameInMemoryDb implements GameDb {
         Game gameLeuven = Game.builder()
                 .name("Leuven City Quest")
                 .location("Leuven")
-                .coordinate(coordinateLeuven)
+                .coordinates(coordinateLeuven)
                 .description("City Quest in Leuven")
                 .questions(questionsLeuven)
                 .build();

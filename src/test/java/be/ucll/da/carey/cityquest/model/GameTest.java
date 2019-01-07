@@ -29,14 +29,14 @@ public class GameTest {
                 .name(name)
                 .description(description)
                 .location(location)
-                .coordinate(coordinate)
+                .coordinates(coordinate)
                 .questions(questions)
                 .build();
 
         assertEquals(name, newGame.getName());
         assertEquals(description, newGame.getDescription());
         assertEquals(location, newGame.getLocation());
-        assertEquals(coordinate, newGame.getCoordinate());
+        assertEquals(coordinate, newGame.getCoordinates());
         assertEquals(questions, newGame.getQuestions());
     }
 
@@ -45,7 +45,7 @@ public class GameTest {
         Game.builder()
                 .description(description)
                 .location(location)
-                .coordinate(coordinate)
+                .coordinates(coordinate)
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class GameTest {
         Game.builder()
                 .name(name)
                 .location(location)
-                .coordinate(coordinate)
+                .coordinates(coordinate)
                 .build();
     }
 
@@ -63,7 +63,7 @@ public class GameTest {
         Game.builder()
                 .name(name)
                 .description(description)
-                .coordinate(coordinate)
+                .coordinates(coordinate)
                 .build();
     }
 

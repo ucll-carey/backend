@@ -28,6 +28,6 @@ public class Game {
     @NonNull
     private String location;
     @NonNull
-    private Coordinate coordinate;
+    private Coordinate coordinates;
     private ArrayList<Question> questions;
 }

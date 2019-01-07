@@ -1,21 +1,21 @@
 package be.ucll.da.carey.cityquest.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 
 @Data
+@NoArgsConstructor
 public class Coordinate {
-    @JsonProperty("lat")
-    private double latitude;
-    @JsonProperty("lon")
-    private double longitude;
+    private double lat;
+    private double lon;
 
-    @java.beans.ConstructorProperties({"latitude", "longitude"})
-    Coordinate(@Min(0) double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    @java.beans.ConstructorProperties({"lat", "lon"})
+    Coordinate(@Min(0) double lat, double lon) {
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public static CoordinateBuilder builder() {
@@ -46,7 +46,7 @@ public class Coordinate {
         }
 
         public String toString() {
-            return "Coordinate.CoordinateBuilder(latitude=" + this.latitude + ", longitude=" + this.longitude + ")";
+            return "Coordinate.CoordinateBuilder(lat=" + this.latitude + ", lon=" + this.longitude + ")";
         }
     }
 
